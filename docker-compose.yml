@@ -3,13 +3,38 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: mishtikotha-app
+    container_name: e-commerce-app
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
     ports:
       - "8001:8001"
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
       APP_ENV: local
       APP_DEBUG: "true"
     command: "php artisan serve --host=0.0.0.0 --port=8001"
+
+  db:
+    build:
+      context: .
+      dockerfile: docker/mysql/Dockerfile
+    container_name: e-commerce-db
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: e_com
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-psecret"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db_data:
