@@ -1,0 +1,47 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import 'custom.css';
+
+
+[x-cloak] {
+    display: none !important;
+}
+
+.datatable td {
+    @apply p-2;
+}
+
+.datatable .sortable:before {
+    position: absolute;
+    content: "▲";
+    top: 0;
+    right: 0;
+    padding: 2px 5px;
+    opacity: 0.2;
+    font-size: 0.7em;
+}
+
+.datatable .sortable:after {
+    position: absolute;
+    content: "▼";
+    bottom: 0;
+    right: 0;
+    padding: 2px 5px;
+    opacity: 0.2;
+    font-size: 0.7em;
+}
+
+.datatable .sorting_asc:before {
+    opacity: 0.8;
+}
+
+.datatable .sorting_desc:after {
+    opacity: 0.8;
+}
+
+table tbody tr td {
+    text-align: center;
+}
+
+
